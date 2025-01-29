@@ -5,6 +5,8 @@
 // validate get schema and check the validation  
 const validate = (schema) => async (req, resp, next) => {
 
+    console.log("req body", req.body)
+
     try {
         const parseBody = await schema.parseAsync(req.body);
         req.body = parseBody;

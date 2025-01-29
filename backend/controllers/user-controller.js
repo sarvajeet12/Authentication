@@ -69,17 +69,26 @@ const sendOTP = async (req, resp) => {
 
 }
 
-// -----------------------------------------  signup logic ------------------------------------------------
+// -----------------------------------------  register logic ------------------------------------------------
 const userSignUp = async (req, resp) => {
-    try {
 
+    try {
         // get data from frontend 
-        const { name, email, password, otp } = req.body;
+        const { email, password, otp } = req.body;
+
 
         // if data not present
-        if (!name || !email || !password || !otp) {
+        if (!email || !password || !otp) {
             return resp.status(400).json({ success: false, message: "Fill the form properly" })
         }
+
+        // check user exist or not
+        const alreadyExists = await User.findOne({ email: email });
+        // if (userExist return true and false)
+        if (alreadyExists) {
+            return resp.status(400).json({ success: false, message: "User Already Register" });
+        }
+
 
         // get recent otp
         const recentOtp = await Otp.findOne({ email: email }).sort({ createdAt: -1 });
@@ -100,12 +109,17 @@ const userSignUp = async (req, resp) => {
         // hashing the password
         const hashedPassword = await User.hashPassword(password);
 
-        //Get 9initial character
-        const initial = name.charAt(0).toUpperCase();
+        //Get initial character
+        let initial = '';
+        if (email.charAt(0) === 'H' || email.charAt(0) === 'h' || email.charAt(0) === 'S' || email.charAt(0) === 's') {
+            initial = email.charAt(0).toUpperCase();
+        } else {
+            initial = email.charAt(0).toLowerCase();
+        }
 
         // create user
         const userCreated = await User.create({
-            name, email, password: hashedPassword, image: initial
+            email, password: hashedPassword, image: `https://api.dicebear.com/5.x/initials/svg?seed=${initial}`,
         })
 
         // response
@@ -208,4 +222,27 @@ const userLogout = async (req, resp) => {
 }
 
 
-module.exports = { sendOTP, userSignUp, userLogin, getUserDetails, userLogout };
+// get all user
+const getAllUser = async (req, resp) => {
+    try {
+        const allUserEmail = await User.find({}, 'email');
+
+
+        // console.log("user email", allUserEmail.email)
+        const emails = allUserEmail.map(user => user.email);
+
+        if (!allUserEmail || allUserEmail.length === 0) {
+            return resp.status(404).send({ message: "No data Found" });
+        }
+
+        resp.status(200).json({ success: true, response: emails });
+    } catch (error) {
+        // resp.status(500).json({ message: error });
+        // console.log(error);
+        next(error)
+    }
+}
+
+
+module.exports = { sendOTP, userSignUp, userLogin, getUserDetails, userLogout, getAllUser };
+// module.exports = { userLogin, getUserDetails, userLogout, getAllUser };

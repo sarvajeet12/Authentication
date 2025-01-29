@@ -1,0 +1,228 @@
+/* ----------------------------------- login page (main) --------------------- */
+.loginPage {
+  /* border: 0.1rem solid #000; */
+  display: flex;
+  flex-direction: column;
+  /* padding: 2rem; */
+}
+
+/* ------------------------------- email pass login --------------------- */
+.emailPassLogin form {
+  width: 100%;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  align-items: center;
+}
+
+.emailPassLogin form input[type="email"],
+.emailPassLogin form input[type="password"] {
+  width: 50%;
+  height: 4rem;
+  padding: 0 0.5rem;
+  font-size: 1.3rem;
+  outline: none;
+}
+
+.emailPassLogin form input[type="submit"] {
+  width: 10%;
+  height: 3.5rem;
+  background-color: #686de0;
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.emailPassLogin form input[type="submit"]:hover {
+  border-radius: 5rem;
+  -webkit-border-radius: 5rem;
+  -moz-border-radius: 5rem;
+  -ms-border-radius: 5rem;
+  -o-border-radius: 5rem;
+
+  transition: all 0.3s linear;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -ms-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+}
+
+/* --------------------------------google login --------------------- */
+
+.googleLogin {
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: center;
+}
+
+.googleLogin button {
+  height: 3.3rem;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 1.5rem;
+  width: 50%;
+  font-size: 1.3rem;
+  background-color: transparent;
+  border: 0.1rem solid #000;
+  cursor: pointer;
+}
+
+.googleLogin button:hover {
+  background-color: #c8d6e5;
+  transition: all linear 0.3s;
+  -webkit-transition: all linear 0.3s;
+  -moz-transition: all linear 0.3s;
+  -ms-transition: all linear 0.3s;
+  -o-transition: all linear 0.3s;
+}
+
+.googleLogin img {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+/* ------------------------------- hr line ------------------------ */
+
+.hrLine {
+  margin: 4rem auto;
+  width: 60%;
+  display: flex;
+}
+
+/* TODO: --------------------------------------- verify email ------------------------------------------------- */
+.verifyEmail {
+  /* border: 1px solid blue; */
+  margin: 10rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5rem;
+}
+
+.verifyEmail .verifyEmailHeading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1rem;
+}
+
+/* ------------------------- header and paragraph --------------------*/
+
+.verifyEmail .verifyEmailHeading h1 {
+  font-size: 3.5rem;
+}
+
+.verifyEmail .verifyEmailHeading p {
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+/* ----------------------------------------- form --------------------------- */
+
+.verifyEmail form {
+  /* border: 1px solid fuchsia; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5rem;
+  padding: 2rem;
+}
+
+.verifyEmail form .otpInputBox {
+  display: flex;
+  height: 3.3rem;
+  min-width: 10rem;
+  margin: 0 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* ---------------------- back to sign up and resend it ------------------------- */
+.backToAndResend {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.backToAndResend a,
+.backToAndResend button {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.backToAndResend a,
+.backToAndResend button {
+  font-size: 1.3rem;
+}
+
+.backToAndResend a {
+  color: #000;
+}
+
+.backToAndResend button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: #0abde3;
+}
+
+/* ==================================== media query ======================== */
+
+@media (width < 1100px) {
+  .emailPassLogin form input[type="email"],
+  .emailPassLogin form input[type="password"],
+  .googleLogin button {
+    width: 60%;
+  }
+
+  .hrLine{
+    width: 70%;
+  }
+
+  .emailPassLogin form input[type="submit"] {
+    width: 15%;
+  }
+}
+
+
+@media (width < 768px) {
+    .emailPassLogin form input[type="email"],
+    .emailPassLogin form input[type="password"],
+    .googleLogin button {
+      width: 80%;
+    }
+  
+    .hrLine{
+      width: 90%;
+    }
+
+    .emailPassLogin form input[type="submit"] {
+        width: 20%;
+      }
+}
+
+
+@media (width < 576px) {
+    .emailPassLogin form input[type="email"],
+    .emailPassLogin form input[type="password"],
+    .googleLogin button {
+      width: 90%;
+    }
+  
+    .hrLine{
+      width: 100%;
+    }
+
+
+    .emailPassLogin form input[type="submit"] {
+        width: 25%;
+        height: 3.3rem;
+      }
+}

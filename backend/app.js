@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 
 // TODO: routers
 const userRouter = require("./routers/user-router");
+const googleRouter = require("./routers/google-router");
 
 
 // TODO: tackle cors
@@ -19,6 +20,7 @@ const corsOption = {
     credentials: true,
     allowedHeaders: ['Authorization', 'Content-Type'],
 }
+
 
 
 
@@ -33,6 +35,7 @@ app.use(cookieParser())
 
 // TODO: connect router
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/user", googleRouter);
 
 
 // TODO: centralized error

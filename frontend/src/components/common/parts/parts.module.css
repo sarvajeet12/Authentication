@@ -1,0 +1,36 @@
+.actionBtn{
+    display: inline-block;
+    height: 3.5rem;
+    /*border: .2rem solid black;
+    */background-color: #fff;
+    /* padding: 1rem 2rem; */
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    
+    border-radius: .3rem;
+    -webkit-border-radius: .3rem;
+    -moz-border-radius: .3rem;
+    -ms-border-radius: .3rem;
+    -o-border-radius: .3rem;
+}
+.actionBtn button{
+    background: transparent;
+    height: 100%;
+    padding: 0 3rem;
+    outline: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.actionBtn:hover{
+    border-radius: 5rem;
+    -webkit-border-radius: 5rem;
+    -moz-border-radius: 5rem;
+    -ms-border-radius: 5rem;
+    -o-border-radius: 5rem;
+    
+}

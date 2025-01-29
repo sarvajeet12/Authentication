@@ -5,19 +5,17 @@ const userControllers = require("../controllers/user-controller")
 const authMiddleware = require("../middlewares/auth-middleware");
 
 // Validation path
-// const userSchemaValidation = require("../validation/signup-validation");
-
-// const userLoginSchemaVal = require("../validation/userLoginSchemaVal");
+const userLoginValidation = require("../validation/login-validation");
 
 // middleware
-// const validate = require("../middlewares/validate-middleware");
+const validate = require("../middlewares/validate-middleware");
 // validate(userSchemaValidation),validate(userLoginSchemaVal),
 
 
 // user login [which user is log (admin or not)]
 router
     .route("/send-otp")
-    .post(userControllers.sendOTP)
+    .post(validate(userLoginValidation), userControllers.sendOTP)
 
 // user login [which user is log (admin or not)]
 // router
@@ -32,7 +30,7 @@ router
 // login page  
 router
     .route("/login").
-    post(userControllers.userLogin);
+    post(validate(userLoginValidation), userControllers.userLogin);
 
 // user login [which user is log (admin or not)]
 router
@@ -47,6 +45,11 @@ router
 // logout
 router.route("/user-logout").get(authMiddleware, userControllers.userLogout)
 
+
+// get all user details
+router
+    .route("/all-user")
+    .get(userControllers.getAllUser);
 
 
 

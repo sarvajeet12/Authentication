@@ -3,7 +3,7 @@ const { z } = require("zod");
 
 //creating an object schema
 
-const userSignUpValidation = z.object({
+const loginValidation = z.object({
     email: z
         .string({ required_error: "Email is required" })
         .trim()
@@ -13,8 +13,9 @@ const userSignUpValidation = z.object({
     password: z
         .string({ required_error: "Password is required" })
         .trim()
-        .min(8, { message: "Password Must Contain At Least 8 Characters!" })
+        .min(6, { message: "Password Must Contain At Least 6 Characters!" })
         .max(12, { message: "Password Must Contain At Most 12 Characters!" }),
+
 });
 
-module.exports = userSignUpValidation;
+module.exports = loginValidation;
