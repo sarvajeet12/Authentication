@@ -10,6 +10,11 @@ router
     .get(googleController.googleLogin)
 
 
+router
+    .route("/all-users-google")
+    .get(googleController.getAllUserGoogle)
+
+
 
 
 

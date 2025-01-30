@@ -12,9 +12,15 @@ const GoogleLogin = () => {
             if (authResult['code']) {
                 // console.log("Google code: ", authResult['code']);
 
-                const result = await apiConnector("GET", `${auth.SIGNUP_API}?code=${authResult['code']}`);
+                const response = await apiConnector("GET", `${auth.GOOGLE_LOGIN_API}?code=${authResult['code']}`);
 
-                console.log("Google login response: ", result);
+                if (!response.data.success) {
+                    throw new Error(response.data.message);
+                } else {
+
+                    console.log("Google login response: ", response);
+                }
+
             }
         } catch (error) {
             console.error("Error while requesting google code", error);

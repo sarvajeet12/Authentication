@@ -17,7 +17,8 @@ const EmailPassLogin = () => {
     });
 
     // for checking email present or not
-    const [userDetails, setUserDetails] = useState([])
+    const [userDetails, setUserDetails] = useState([]);
+    const [userGoogleDetails, setUserGoogleDetails] = useState([])
 
     // // get Data
     const handleInput = (e) => {
@@ -30,8 +31,8 @@ const EmailPassLogin = () => {
         });
     };
 
-    // check email exists or not 
-    const checkEmail = async () => {
+    // check email exists or not  in user model and google model
+    const checkUserEmail = async () => {
         try {
 
             const response = await apiConnector("GET", auth.GET_ALL_USER_API);
@@ -39,7 +40,7 @@ const EmailPassLogin = () => {
             if (!response.data.success) {
                 throw new Error(response.data.message);
             } else {
-                // console.log("Login Response : ", response.data.response);
+                console.log("Login Response user : ", response.data.response);
                 setUserDetails(response.data.response)
 
             }
@@ -48,8 +49,27 @@ const EmailPassLogin = () => {
         }
     }
 
+    // google part
+    const checkUserGoogleEmail = async () => {
+        try {
+
+            const response = await apiConnector("GET", auth.GOOGLE_ALL_USERS_API);
+
+            if (!response.data.success) {
+                throw new Error(response.data.message);
+            } else {
+                console.log("Login Response google user: ", response.data.response);
+                setUserGoogleDetails(response.data.response)
+
+            }
+        } catch (error) {
+            console.log("all user email error", error)
+        }
+    }
+
     useEffect(() => {
-        checkEmail()
+        checkUserEmail()
+        checkUserGoogleEmail();
     }, [])
 
 
@@ -60,9 +80,11 @@ const EmailPassLogin = () => {
 
         // checking email present or not
         const isEmailPresent = userDetails.includes(userLoginData.email);
-        // console.log("present or not", isEmailPresent)
+        const isEmailPresentGoogle = userGoogleDetails.includes(userLoginData.email);
+        console.log("present or not", isEmailPresent)
+        console.log("present or not", isEmailPresentGoogle)
 
-        if (isEmailPresent) {
+        if (isEmailPresent || isEmailPresentGoogle) {
             // only login
             try {
                 const response = await apiConnector("POST", auth.LOGIN_API, {
@@ -78,6 +100,7 @@ const EmailPassLogin = () => {
                         password: "",
                     });
 
+                    navigate("/");
                     console.log("email exists response:", response)
                 }
 

@@ -1,4 +1,5 @@
 const User = require("../models/user-model");
+const GoogleModel = require("../models/google-model");
 const Otp = require("../models/otp-model");
 const OtpGenerator = require("otp-generator")
 const BlackListToken = require("../models/blacklisted-token-model")
@@ -15,8 +16,9 @@ const sendOTP = async (req, resp) => {
 
         // email already exist or not
         const alreadyExists = await User.findOne({ email: email });
+        const googleEmailExists = await GoogleModel.find({ email: email })
 
-        if (alreadyExists) {
+        if (alreadyExists || googleEmailExists) {
             return resp.status(403).json({
                 success: false,
                 message: "User already registered"
@@ -147,37 +149,49 @@ const userLogin = async (req, resp) => {
 
         // matching  login email and register email
         const user = await User.findOne({ email: email }).select("+password");
+        const googleEmail = await GoogleModel.findOne({ email: email });
+        // console.log("google email present or not : ", googleEmail)
+        // console.log("google email present or not : ", user)
 
         // console.log(user) : if true, show all information of that data
-        if (!user) {
-            return resp.status(400).json({ success: false, message: "User not registered, please singUp first" });
+        if (!user || !googleEmail) {
+            return resp.status(400).json({ success: false, message: "User not registered, please registered first" });
 
-        }
-
-        // password comparing frontend password and db password
-        const isMatch = await user.comparePassword(password);
-
-        if (!isMatch) {
-            return resp.status(401).json({ success: false, message: "Invalid Credentials" })
         } else {
-            const token = user.generateAuthToken();
 
-            // additional info
-            const options = {
-                maxAge: 5 * 60 * 1000, // 5min
-                httpOnly: true,
+            // when user is true
+            if (user) {
+                // password comparing frontend password and db password
+                const isMatch = await user.comparePassword(password);
+
+                if (!isMatch) {
+                    return resp.status(401).json({ success: false, message: "Invalid Credentials" })
+                } else {
+                    const token = user.generateAuthToken();
+
+                    // additional info
+                    const options = {
+                        maxAge: 5 * 60 * 1000, // 5min
+                        httpOnly: true,
+                    }
+
+                    resp.cookie("token", token, options)
+
+                    resp.status(200).json({
+                        success: true,
+                        message: "User Login Successful",
+                        token: token,
+                        response: user,
+
+                    });
+                }
+            } else if (googleEmail) {
+                return resp.status(401).json({ success: false, message: "Invalid Credentials" })
             }
 
-            resp.cookie("token", token, options)
-
-            resp.status(200).json({
-                success: true,
-                message: "User Login Successful",
-                token: token,
-                response: user,
-
-            });
         }
+
+
 
     } catch (error) {
         console.log("Error Occurs while login: ", error);

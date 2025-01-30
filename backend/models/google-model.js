@@ -2,10 +2,6 @@ const Mongoose = require("mongoose");
 const JWT = require("jsonwebtoken")
 
 const userGoogleSchema = new Mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
     email: {
         type: String,
         required: true,
@@ -18,7 +14,7 @@ const userGoogleSchema = new Mongoose.Schema({
 
 
 // Generate token
-userSchema.methods.generateAuthToken = function () {
+userGoogleSchema.methods.generateAuthToken = function () {
 
     const payload = {
         email: this.email,

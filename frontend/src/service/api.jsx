@@ -4,8 +4,8 @@ const BASE_URL = "http://localhost:4000/api/v1";
 
 export const auth = {
     // login with google api
-    // GOOGLE_SIGNUP_API: BASE_URL + "/user/google-login",
-    // GOOGLE_LOGIN_API: BASE_URL + "/user/login",
+    GOOGLE_LOGIN_API: BASE_URL + "/user/google-login",
+    GOOGLE_ALL_USERS_API: BASE_URL + "/user/all-users-google",
 
     // login and registration api
     LOGIN_API: BASE_URL + "/user/login",

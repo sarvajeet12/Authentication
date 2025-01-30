@@ -19,7 +19,7 @@ const VerifyOtp = () => {
 
     // console.log("signup data: ", signupData);
 
-    const {email, password } = loginData;
+    const { email, password } = loginData;
 
     try {
       const response = await apiConnector("POST", auth.SIGN_UP_API, {
@@ -32,34 +32,14 @@ const VerifyOtp = () => {
         throw new Error(response.data.message);
       } else {
         console.log("Verify email response : ", response);
-        
-        navigate("/login");
+
+        navigate("/");
       }
     } catch (error) {
       console.log("Error in verify email: ", error);
     }
   };
 
-  // -------------------------------------- resend otp --------------------------------------------------
-  // const resendOtp = async (e) => {
-  //   e.preventDefault();
-  //   const { email } = signupData;
-  //   const loadingToastId = toast.loading("Sending otp...");
-
-  //   try {
-  //     const response = await apiConnector("POST", auth.RESEND_OTP_API, {
-  //       email,
-  //     });
-
-  //     if (!response.data.success) {
-  //       throw new Error(response.data.message);
-  //     } else {
-  //       // navigate("/verify-email");
-  //     }
-  //   } catch (error) {
-  //     console.log("error in otp form: ", error);
-  //   }
-  // };
 
   return (
     <div className={Style.verifyEmail}>
